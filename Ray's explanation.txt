@@ -1,0 +1,37 @@
+void mov(String pos) {
+  mov(0, false, pos);
+}
+ 
+void mov(int lineNum, String pos) {
+  mov(lineNum, true, pos);
+}
+ 
+void mov(int lineNum, bool overrideLineNum, String pos) {
+  char cmdBuffer[255];
+  sprintf(cmdBuffer, "MOV %s", pos);
+  robotFunction(String(cmdBuffer), overrideLineNum, lineNum);
+}
+ 
+void definePosition(String posName, float coords[]) {
+  definePosition(0, false, posName, coords);
+}
+ 
+void definePosition(int lineNum, String posName, float coords[]) {
+  definePosition(lineNum, true, posName, coords);
+}
+ 
+void definePosition(int lineNum, bool overrideLineNum, String posName, float coords[]) {
+  char cmdBuffer[255];
+  sprintf(cmdBuffer, "%s=(%f,%f,%f,%f,%f,%f)", posName, coords[0], coords[1], coords[2], coords[3], coords[4], coords[5]);
+  robotFunction(String(cmdBuffer), overrideLineNum, lineNum);
+}
+ 
+void robotFunction(String cmd, bool overrideLineNum, int lineNum) {  
+  int printLineNum = lineNum;
+  if (overrideLineNum) {
+    static int curLineNum = 0;
+    curLineNum+=10;
+    printLineNum = curLineNum;
+  }
+  Serial.printf("EDATA%d %s", printLineNum, cmd);
+}
