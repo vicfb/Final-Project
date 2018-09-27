@@ -2,7 +2,12 @@ import serial
 
 ser = serial.Serial('COM4', 19200, timeout=0,stopbits=2, parity=serial.PARITY_EVEN, rtscts=1)  # open serial port
 print(ser.name) 
-
+#Write the program here
+def main():
+    MOV('J1')
+    DLY('1')
+    MOV('J2')
+    END()
 #Initializes the line number
 printLineNum=0
 
@@ -91,9 +96,14 @@ def H_CTRL_Int(lineNum, hand):
     H_CTRL_Buffer = 'H%s 1' % (hand)
     writeFunction(H_CTRL_Buffer, lineNum)
 
-def END_int(lineNum):
+def DLY_Int(lineNum, delay):
+    DLY_Buffer = 'DLY %s' % (delay)
+    writeFunction(DLY_Buffer, lineNum)
+
+def END_Int(lineNum):
     ENDBuffer = 'END'
     writeFunction(ENDBuffer, lineNum)
+
 
 
 #Command Functions
@@ -179,27 +189,23 @@ def H_CTRL(hand):
     """Controls hand, H+CTRL('OPEN') or H_CTRL('CLOSE')"""
     H_CTRL_Int(printLineNum, hand)
 
+#Delay
+def DLY(delay):
+    """Adds a delay in seconds on the program"""
+    DLY_Int(printLineNum, delay)
+
 #Function to end the program, last command of the program 
 def END():
-    END_int(printLineNum)
-
-
-#Write the program here
-def main():
-    MOV('P2')
-    MOV('J1')
-    MOV('P1')
-    MOV('P3')
-    END()
+    END_Int(printLineNum)
 
 
 ser.write(b'1;1;CNTLON\r')
 ser.write(b'1;1;SAVE\r')
-ser.write(b'1;9;LOAD=PROJECT.MB4\r')
+ser.write(b'1;9;LOAD=VICTOR.MB4\r')
 ser.write(b'1;1;SAVE\r')
-ser.write(b'1;9;LOAD=PROJECT.MB4\r')
+ser.write(b'1;9;LOAD=VICTOR.MB4\r')
 ser.write(b'1;1;SAVE\r')
-ser.write(b'1;9;LOAD=PROJECT.MB4\r')
+ser.write(b'1;9;LOAD=VICTOR.MB4\r')
 #Function where the robot program is written
 main()
 ser.write(b'1;1;SAVE\r')
