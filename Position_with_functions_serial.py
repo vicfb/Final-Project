@@ -44,7 +44,7 @@ def positionFlag(posName, coords, structureFlag):
 #sending to the controller
 ser.write(b'1;1;CNTLON\r') #TURNS THE CONTROLLER ON
 ser.write(b'1;1;SAVE\r') #INDICATES THE SAVING OF A NEW ITEM
-ser.write(b'1;9;LOAD=VICTOR.MB4\r') #CREATES THE PROJECT NAME
+ser.write(b'1;9;LOAD=VICTOR2.MB4\r') #CREATES THE PROJECT NAME
 main()
 ser.write(b'1;1;SAVE\r')#FINSIH SAVING
 ser.write(b'1;1;CNTLOFF\r')#TURNS THE CONTROLLER OFF

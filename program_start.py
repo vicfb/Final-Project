@@ -6,11 +6,11 @@ ser = serial.Serial('COM4', 19200, timeout=0,stopbits=2, parity=serial.PARITY_EV
 print(ser.name)          
 
 ser.write(b'1;1;CNTLON\r')
-ser.write(b'1;1;FCHECKVICTOR1.MB4\r')
+ser.write(b'1;1;FCHECKVICTOR2.MB4\r')
 ser.write(b'1;1;SAVE\r')
 ser.write(b'1;1;SLOTINIT\r')
 ser.write(b'1;1;RSTPRG\r')
-ser.write(b'1;1;PRGLOAD=VICTOR1.MB4\r')
+ser.write(b'1;1;PRGLOAD=VICTOR2.MB4\r')
 ser.write(b'1;1;SRVON\r')
 ser.write(b'1;1;STATE\r')
 ser.write(b'1;1;RUN\r')

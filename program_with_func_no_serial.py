@@ -67,6 +67,7 @@ MOV('P1')
 MOV('P2')
 MOV('P3')
 END()
+
 print(command_to_byte)
 
 

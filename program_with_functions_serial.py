@@ -6,7 +6,7 @@ print(ser.name)
 #Write the program here
 def main():
     OVRD('70')
-    MOV('J1')
+    MOV('P1')
     DLY('1')
     MOV('J2')
     END()
@@ -14,15 +14,14 @@ def main():
 printLineNum=0
 command_to_send =''
 
+
+
 """The string command sentence is built in stages, writeFunction sends the serial command and it is the last stage
 it creates the common part of the command sentence, Command_Init functions create the command part 
 of the sentence and insert the line number, while Command functions insert the last part of the sentence, 
 which means on Command Functions only the Command argument is necessary.
 The command functions are the one used to create the robot program, they are equivalent to the ones used on 
 Cosirop"""
-
-command_to_byte = str.encode(command_to_send) #converts the string built in bytes to be transmitted in serial
-
 
 def writeFunction(cmd, lineNum):
     """This function is responsible for sending the serial command"""
@@ -37,7 +36,10 @@ def addline(newline):
         """Add a program line"""
         #self.lineno += 1
         global command_to_send
+       
         command_to_send += '%s' % (newline) + '\r' + '\n'
+        command_to_byte = str.encode(command_to_send) #converts the string built in bytes to be transmitted in serial
+        ser.write(command_to_byte)
 
 #Command_Init Functions
 def MOV_Init(lineNum, pos):
@@ -213,15 +215,15 @@ def END():
 
 ser.write(b'1;1;CNTLON\r')
 ser.write(b'1;1;SAVE\r')
-ser.write(b'1;9;LOAD=VICTOR1.MB4\r')
+ser.write(b'1;9;LOAD=VICTOR2.MB4\r')
 #ser.write(b'1;1;SAVE\r')
 #ser.write(b'1;9;LOAD=VICTOR.MB4\r')
 #ser.write(b'1;1;SAVE\r')
 #ser.write(b'1;9;LOAD=VICTOR.MB4\r')
 #Function where the robot program is written
 main()
-ser.write(command_to_byte)
 ser.write(b'1;1;SAVE\r')
 ser.write(b'1;1;CNTLOFF\r')
 
 print(command_to_send)
+
