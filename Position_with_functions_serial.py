@@ -1,5 +1,13 @@
 import serial
 
+#Write the positions here
+def main():
+    positionNoFlag('P2', [210.19,250.50,550.00,0.00,90.00,0.00])
+    positionNoFlag('P3', [67.79,31.61,854.70,28.49,20.00,0.00])
+    positionNoFlag('P1', [404.71,188.72,186.91,-15.48,145.00,0.00] )
+    positionNoFlag('J1', [60.00, 0.00, 60.00, 0.00, 0.00, 0.00])
+    positionNoFlag('J2', [60.00, 0.00, 110.00, 0.00, 0.00, 0.00])
+    
 ser = serial.Serial('COM4', 19200, timeout=0,stopbits=2, parity=serial.PARITY_EVEN, rtscts=1)  # open serial port
 print(ser.name) 
 
@@ -31,13 +39,7 @@ def positionFlag(posName, coords, structureFlag):
     """This function writes the position with the flag, on the Format P1=(X,Y,Z,A,B,C)(L1,L2)"""
     definePosition(posName, coords, False, structureFlag)
 
-#Write the positions here
-def main():
-    positionNoFlag('P2', [210.19,250.50,550.00,0.00,90.00,0.00])
-    positionNoFlag('P3', [67.79,31.61,854.70,28.49,20.00,0.00])
-    positionNoFlag('P1', [404.71,188.72,186.91,-15.48,145.00,0.00] )
-    positionNoFlag('J1', [60.00, 0.00, 60.00, 0.00, 0.00, 0.00])
-    positionNoFlag('J2', [60.00, 0.00, 110.00, 0.00, 0.00, 0.00])
+
 
 #sending to the controller
 ser.write(b'1;1;CNTLON\r') #TURNS THE CONTROLLER ON

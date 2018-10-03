@@ -1,4 +1,5 @@
 printLineNum=0
+command_to_byte = ''
 
 def writeFunction(cmd, lineNum):
     """This function is responsible for sending the serial command"""
@@ -6,7 +7,13 @@ def writeFunction(cmd, lineNum):
     printLineNum = lineNum
     printLineNum += 10
     words=("1;9;EDATA%d %s" % (printLineNum, cmd))
-    print(words)
+    addline(words)
+
+def addline(newline):
+        """Add a program line"""
+        #self.lineno += 1
+        global command_to_byte
+        command_to_byte += '%s' % (newline) + '\r' +'\n'
 
 #functions that control the robot movement
 #MOV
@@ -57,8 +64,10 @@ def END():
     END_int(printLineNum)
 
 MOV('P1')
+MOV('P2')
+MOV('P3')
 END()
-
+print(command_to_byte)
 
 
 
