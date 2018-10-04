@@ -1,7 +1,9 @@
 import serial
 
+#Write the program name here
+ProgName = ''
 #Write the positions here
-def main():
+def Position_List():
     positionNoFlag('P2', [210.19,250.50,550.00,0.00,90.00,0.00])
     positionNoFlag('P3', [67.79,31.61,854.70,28.49,20.00,0.00])
     positionNoFlag('P1', [404.71,188.72,186.91,-15.48,145.00,0.00] )
@@ -44,7 +46,7 @@ def positionFlag(posName, coords, structureFlag):
 #sending to the controller
 ser.write(b'1;1;CNTLON\r') #TURNS THE CONTROLLER ON
 ser.write(b'1;1;SAVE\r') #INDICATES THE SAVING OF A NEW ITEM
-ser.write(b'1;9;LOAD=VICTOR2.MB4\r') #CREATES THE PROJECT NAME
-main()
+ser.write(b'1;9;LOAD=%s.MB4\r' % ProgName) #CREATES THE PROJECT NAME
+Position_List()
 ser.write(b'1;1;SAVE\r')#FINSIH SAVING
 ser.write(b'1;1;CNTLOFF\r')#TURNS THE CONTROLLER OFF

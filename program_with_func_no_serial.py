@@ -1,5 +1,6 @@
 printLineNum=0
-command_to_byte = ''
+command_to_send = ''
+command_to_byte = b''
 
 def writeFunction(cmd, lineNum):
     """This function is responsible for sending the serial command"""
@@ -13,7 +14,9 @@ def addline(newline):
         """Add a program line"""
         #self.lineno += 1
         global command_to_byte
-        command_to_byte += '%s' % (newline) + '\r' +'\n'
+        global command_to_send
+        command_to_send += '%s' % (newline) + '\r' +'\n'
+        command_to_byte += str.encode(command_to_send)
 
 #functions that control the robot movement
 #MOV
@@ -68,7 +71,9 @@ MOV('P2')
 MOV('P3')
 END()
 
+print(command_to_send)
 print(command_to_byte)
+
 
 
 

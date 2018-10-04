@@ -3,16 +3,18 @@ import serial
 ser = serial.Serial('COM4', 19200, timeout=0,stopbits=2, parity=serial.PARITY_EVEN, rtscts=1)  # open serial port
 print(ser.name) 
 
+#Write the program name here
+ProgName = ''
 #Write the program here
-def main():
+def Robot_Program():
     OVRD('70')
     MOV('P1')
-    DLY('1')
     MOV('J2')
     END()
 #Initializes the line number
 printLineNum=0
 command_to_send =''
+command_to_byte = b''
 
 
 
@@ -36,10 +38,10 @@ def addline(newline):
         """Add a program line"""
         #self.lineno += 1
         global command_to_send
-       
+        global command_to_byte
         command_to_send += '%s' % (newline) + '\r' + '\n'
-        command_to_byte = str.encode(command_to_send) #converts the string built in bytes to be transmitted in serial
-        ser.write(command_to_byte)
+        command_to_byte += str.encode(command_to_send) #converts the string built in bytes to be transmitted in serial
+        
 
 #Command_Init Functions
 def MOV_Init(lineNum, pos):
@@ -215,13 +217,10 @@ def END():
 
 ser.write(b'1;1;CNTLON\r')
 ser.write(b'1;1;SAVE\r')
-ser.write(b'1;9;LOAD=VICTOR2.MB4\r')
-#ser.write(b'1;1;SAVE\r')
-#ser.write(b'1;9;LOAD=VICTOR.MB4\r')
-#ser.write(b'1;1;SAVE\r')
-#ser.write(b'1;9;LOAD=VICTOR.MB4\r')
+ser.write(b'1;9;LOAD=%s.MB4\r' % ProgName)
 #Function where the robot program is written
-main()
+Robot_Program()
+ser.write(command_to_byte)
 ser.write(b'1;1;SAVE\r')
 ser.write(b'1;1;CNTLOFF\r')
 
